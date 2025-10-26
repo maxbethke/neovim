@@ -24,6 +24,13 @@ vim.opt.listchars = { tab = '→ ', trail = '·', nbsp = '␣' }  -- Define whic
 vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
 
+-- Filetype detection
+vim.filetype.add({
+  extension = {
+    MD = 'markdown',
+  },
+})
+
 -- Setup plugins
 require("lazy").setup({
   {
@@ -100,6 +107,21 @@ require("lazy").setup({
   {
     "sindrets/diffview.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && yarn install",
+    ft = { "markdown" },
+    init = function()
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_preview_options = {
+        mkit = {},
+        katex = {},
+        uml = {},  -- PlantUML support
+        maid = {},  -- Mermaid support
+      }
+    end,
   },
 })
 
